@@ -24,7 +24,7 @@ class Token(BaseModel):
 
 @router.get("/github/login")
 async def github_login():
-    redirect_uri = "http://localhost:5173/login"
+    redirect_uri = FRONTEND_URL + "/login"
     return {
         "url": f"https://github.com/login/oauth/authorize?client_id={GITHUB_CLIENT_ID}&scope=repo,user:email&redirect_uri={redirect_uri}"
     }
@@ -45,7 +45,7 @@ async def github_callback(code: str, background_tasks: BackgroundTasks, db: Asyn
                     "client_id": GITHUB_CLIENT_ID,
                     "client_secret": GITHUB_CLIENT_SECRET,
                     "code": code,
-                    "redirect_uri": "http://localhost:5173/login",
+                    "redirect_uri": FRONTEND_URL + "/login",
                 },
             )
             print(f"Debug: Token response status: {response.status_code}")
